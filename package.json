@@ -39,6 +39,8 @@
     "@angular/platform-browser-dynamic": "^10.0.0",
     "@angular/router": "^10.0.0",
     "@nrwl/angular": "10.2.1",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.4.0",
     "rxjs": "~6.5.5",
     "stylelint": "^13.7.2",
     "stylelint-config-rational-order": "^0.1.2",
