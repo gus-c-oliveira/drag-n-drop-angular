@@ -1,0 +1,176 @@
+{
+  "version": 1,
+  "projects": {
+    "drag-n-drop-angular": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/drag-n-drop-angular",
+      "sourceRoot": "apps/drag-n-drop-angular/src",
+      "prefix": "gus",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/drag-n-drop-angular",
+            "index": "apps/drag-n-drop-angular/src/index.html",
+            "main": "apps/drag-n-drop-angular/src/main.ts",
+            "polyfills": "apps/drag-n-drop-angular/src/polyfills.ts",
+            "tsConfig": "apps/drag-n-drop-angular/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/drag-n-drop-angular/src/favicon.ico",
+              "apps/drag-n-drop-angular/src/assets"
+            ],
+            "styles": ["apps/drag-n-drop-angular/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/drag-n-drop-angular/src/environments/environment.ts",
+                  "with": "apps/drag-n-drop-angular/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "drag-n-drop-angular:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "drag-n-drop-angular:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "drag-n-drop-angular:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/drag-n-drop-angular/tsconfig.app.json",
+              "apps/drag-n-drop-angular/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/drag-n-drop-angular/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/drag-n-drop-angular/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "drag-n-drop-angular-e2e": {
+      "root": "apps/drag-n-drop-angular-e2e",
+      "sourceRoot": "apps/drag-n-drop-angular-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/drag-n-drop-angular-e2e/cypress.json",
+            "tsConfig": "apps/drag-n-drop-angular-e2e/tsconfig.e2e.json",
+            "devServerTarget": "drag-n-drop-angular:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "drag-n-drop-angular:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/drag-n-drop-angular-e2e/tsconfig.e2e.json"],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/drag-n-drop-angular-e2e/**/*"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/workspace": {
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/cypress": {
+      "cypress-project": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/node": {
+      "application": {
+        "linter": "tslint"
+      },
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/nest": {
+      "application": {
+        "linter": "tslint"
+      },
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/express": {
+      "application": {
+        "linter": "tslint"
+      },
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "defaultProject": "drag-n-drop-angular"
+}
