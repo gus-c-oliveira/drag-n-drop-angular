@@ -1,6 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 
-import { Todo, mockTodos } from './todo/index';
+import { Todo } from './todo';
 
 @Component({
   selector: 'gus-root',
@@ -8,11 +9,19 @@ import { Todo, mockTodos } from './todo/index';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  public todos: Todo[] = mockTodos;
+  public todos: Todo[] = [];
+
+  public constructor(private http: HttpClient) {
+    this.fetchTodos();
+  }
+
+  private fetchTodos() {
+    this.http
+      .get<Todo[]>('/api/todos')
+      .subscribe((todos) => (this.todos = todos));
+  }
 
   public addTodo() {
-    this.todos.push({
-      title: `Todo ${this.todos.length + 1}`,
-    });
+    this.http.post('/api/addTodo', {}).subscribe(() => this.fetchTodos());
   }
 }
