@@ -28,6 +28,12 @@
     "drag-n-drop-angular-e2e": {
       "tags": [],
       "implicitDependencies": ["drag-n-drop-angular"]
+    },
+    "api": {
+      "tags": []
+    },
+    "todo": {
+      "tags": []
     }
   }
 }

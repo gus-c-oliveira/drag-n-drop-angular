@@ -1,13 +1,14 @@
-import { getGreeting } from '../support/app.po';
+import { getAddTodoButton, getTodos } from '../support/app.po';
 
 describe('drag-n-drop-angular', () => {
   beforeEach(() => cy.visit('/'));
 
-  it('should display welcome message', () => {
-    // Custom command example, see `../support/commands.ts` file
-    cy.login('my-email@something.com', 'myPassword');
+  it('should display todo items', () => {
+    getTodos().should((items) => expect(items.length).equal(2));
+  });
 
-    // Function helper example, see `../support/app.po.ts` file
-    getGreeting().contains('Welcome to drag-n-drop-angular!');
+  it('should create a new todo item when clicking the add todo button', () => {
+    getAddTodoButton().click();
+    getTodos().should((items) => expect(items.length).equal(3));
   });
 });
