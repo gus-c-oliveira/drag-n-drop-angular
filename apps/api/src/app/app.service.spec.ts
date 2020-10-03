@@ -1,0 +1,32 @@
+import { Test } from '@nestjs/testing';
+
+import { AppService } from './app.service';
+import { mockTodos } from './todo';
+
+describe('AppService', () => {
+  let service: AppService;
+
+  beforeAll(async () => {
+    const app = await Test.createTestingModule({
+      providers: [AppService],
+    }).compile();
+
+    service = app.get<AppService>(AppService);
+  });
+
+  describe('getData', () => {
+    it('should return list of mock todos', () => {
+      expect(service.getTodos()).toEqual(mockTodos);
+    });
+  });
+
+  describe('addTodo', () => {
+    it('should create a new todo item', () => {
+      service.addTodo();
+      expect(service.getTodos()).toEqual([
+        ...mockTodos,
+        { title: `Todo ${mockTodos.length + 1}` },
+      ]);
+    });
+  });
+});
