@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-
-import { Todo } from './todo';
+import { Todo } from '@gus/todo';
 
 @Component({
   selector: 'gus-root',

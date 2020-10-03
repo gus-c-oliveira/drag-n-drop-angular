@@ -1,8 +1,8 @@
+import { mockTodos } from '@gus/todo';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { mockTodos } from './todo';
 
 describe('AppController', () => {
   let app: TestingModule;

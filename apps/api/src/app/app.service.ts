@@ -1,6 +1,5 @@
+import { mockTodos, Todo } from '@gus/todo';
 import { Injectable } from '@nestjs/common';
-
-import { mockTodos, Todo } from './todo';
 
 @Injectable()
 export class AppService {
