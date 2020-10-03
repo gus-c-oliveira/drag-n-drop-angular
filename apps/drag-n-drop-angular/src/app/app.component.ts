@@ -9,4 +9,10 @@ import { Todo, mockTodos } from './todo/index';
 })
 export class AppComponent {
   public todos: Todo[] = mockTodos;
+
+  public addTodo() {
+    this.todos.push({
+      title: `Todo ${this.todos.length + 1}`,
+    });
+  }
 }
