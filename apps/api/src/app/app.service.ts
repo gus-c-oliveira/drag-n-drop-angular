@@ -1,9 +1,9 @@
-import { Todo, TodoStatus } from '@gus/todo';
+import { mockTodos, Todo, TodoStatus } from '@gus/todo';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AppService {
-  private todos: Todo[] = [];
+  private todos: Todo[] = [...mockTodos];
   private ids = [];
 
   public getTodos(): Todo[] {
@@ -29,7 +29,9 @@ export class AppService {
 
   public updateTodo(id: string, status: TodoStatus) {
     const todo = this.todos.find((item) => item.id === id);
-    todo.status = status;
+    if (todo) {
+      todo.status = status;
+    }
   }
 
   public deleteTodo(id: string) {
