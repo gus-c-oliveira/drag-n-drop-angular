@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { Todo } from '@gus/todo';
+import { getNextStatus, Todo, TodoStatus } from '@gus/todo';
 
 @Component({
   selector: 'gus-root',
@@ -21,6 +21,18 @@ export class AppComponent {
   }
 
   public addTodo() {
-    this.http.post('/api/addTodo', {}).subscribe(() => this.fetchTodos());
+    this.http
+      .post('/api/todos', { status: TodoStatus.TODO })
+      .subscribe(() => this.fetchTodos());
+  }
+
+  public updateTodo(id: string, status: TodoStatus) {
+    this.http
+      .put('/api/todos', { id, status: getNextStatus(status) })
+      .subscribe(() => this.fetchTodos());
+  }
+
+  public deleteTodo(id: string) {
+    this.http.delete(`/api/todos/${id}`).subscribe(() => this.fetchTodos());
   }
 }
