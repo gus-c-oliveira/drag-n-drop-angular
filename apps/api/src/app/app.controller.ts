@@ -1,18 +1,36 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 
 import { AppService } from './app.service';
 
-@Controller()
+@Controller('todos')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get('todos')
+  @Get()
   getTodos() {
     return this.appService.getTodos();
   }
 
-  @Post('addTodo')
-  addTodo() {
-    return this.appService.addTodo();
+  @Post()
+  addTodo(@Body() body) {
+    return this.appService.addTodo(body.status);
+  }
+
+  @Put()
+  updateTodo(@Body() body) {
+    return this.appService.updateTodo(body.id, body.status);
+  }
+
+  @Delete(':id')
+  deleteTodo(@Param() params) {
+    return this.appService.deleteTodo(params.id);
   }
 }
