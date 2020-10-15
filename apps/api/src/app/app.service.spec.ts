@@ -1,4 +1,4 @@
-import { TodoStatus } from '@gus/todo';
+import { mockTodos, TodoStatus } from '@gus/todo';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { AppService } from './app.service';
@@ -20,14 +20,15 @@ describe('AppService', () => {
 
   describe('getTodos', () => {
     it('should return array of todos', () => {
-      expect(service.getTodos()).toEqual([]);
+      expect(service.getTodos()).toEqual([...mockTodos]);
     });
   });
 
   describe('addTodo', () => {
     it('should create a todo', () => {
       service.addTodo(TodoStatus.WIP);
-      const newTodo = service.getTodos()[0];
+      const todos = service.getTodos();
+      const newTodo = todos[todos.length - 1];
       expect(newTodo).toBeTruthy();
       expect(newTodo.status).toEqual(TodoStatus.WIP);
     });
@@ -36,20 +37,22 @@ describe('AppService', () => {
   describe('updateTodo', () => {
     it('should update a todo with the new status', () => {
       service.addTodo(TodoStatus.WIP);
-      const newTodoId = service.getTodos()[0].id;
+      let todos = service.getTodos();
+      const newTodoId = todos[todos.length - 1].id;
       service.updateTodo(newTodoId, TodoStatus.REVIEW);
-      const updatedTodo = service.getTodos()[0];
+      todos = service.getTodos();
+      const updatedTodo = todos[todos.length - 1];
       expect(updatedTodo.status).toEqual(TodoStatus.REVIEW);
     });
   });
 
   describe('deleteTodo', () => {
     it('should delete a todo', () => {
+      const originalLength = service.getTodos().length;
       service.addTodo(TodoStatus.WIP);
-      service.addTodo(TodoStatus.REVIEW);
       const todos = service.getTodos();
-      service.deleteTodo(todos[0].id);
-      expect(service.getTodos().length).toEqual(1);
+      service.deleteTodo(todos[todos.length - 1].id);
+      expect(service.getTodos().length).toEqual(originalLength);
     });
   });
 });
