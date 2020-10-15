@@ -1,3 +1,3 @@
-import { Todo } from './todo.model';
+import { Todo, TodoStatus } from './todo.model';
 
-export const mockTodos: Todo[] = [{ title: 'Todo 1' }, { title: 'Todo 2' }];
+export const mockTodos: Todo[] = [{ id: '0', status: TodoStatus.TODO }];

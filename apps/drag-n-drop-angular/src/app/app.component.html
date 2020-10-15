@@ -1,11 +1,11 @@
 <h1>To-Do App</h1>
 
-<ul>
-  <li *ngFor="let todo of todos" class="todo">
-    {{ todo.title }}
-  </li>
-</ul>
-
 <button id="add-todo" (click)="addTodo()">
   Add Todo
 </button>
+
+<div *ngFor="let todo of todos" class="todo">
+  <span class="todo__info">#{{ todo.id }} - Status: {{ todo.status }}</span>
+  <span (click)="updateTodo(todo.id, todo.status)" class="update">Update</span>
+  <span (click)="deleteTodo(todo.id)" class="delete">Delete</span>
+</div>
