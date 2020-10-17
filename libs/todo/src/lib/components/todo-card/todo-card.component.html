@@ -1,0 +1,14 @@
+<div *ngIf="todo" class="todo">
+  <span class="todo__info"> #{{ todo.id }} - Status: {{ todo.status }} </span>
+  <span
+    (click)="
+      handleReduce({ id: todo.id, type: 'update', payload: todo.status })
+    "
+    class="update"
+  >
+    Update
+  </span>
+  <span (click)="handleReduce({ id: todo.id, type: 'delete' })" class="delete">
+    Delete
+  </span>
+</div>

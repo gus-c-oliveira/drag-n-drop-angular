@@ -22,3 +22,9 @@ export interface Todo {
   id: string;
   status: TodoStatus;
 }
+
+export interface TodoEvent {
+  id: string;
+  type: string;
+  payload?: any;
+}

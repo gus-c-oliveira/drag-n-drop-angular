@@ -1,12 +1,13 @@
 import { HttpClientModule } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
+import { TodoModule } from '@gus/todo';
 
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientModule],
+      imports: [HttpClientModule, TodoModule],
       declarations: [AppComponent],
     }).compileComponents();
   });

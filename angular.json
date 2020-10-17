@@ -130,7 +130,7 @@
       "root": "apps/api",
       "sourceRoot": "apps/api/src",
       "projectType": "application",
-      "prefix": "api",
+      "prefix": "gus",
       "schematics": {},
       "architect": {
         "build": {
@@ -184,6 +184,7 @@
       "root": "libs/todo",
       "sourceRoot": "libs/todo/src",
       "projectType": "library",
+      "prefix": "gus",
       "schematics": {},
       "architect": {
         "lint": {
@@ -200,6 +201,8 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/todo/jest.config.js",
+            "tsConfig": "libs/logo/tsconfig.spec.json",
+            "setupFile": "libs/todo/src/test-setup.ts",
             "passWithNoTests": true
           }
         }
