@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { getNextStatus, Todo, TodoStatus } from '@gus/todo';
+import { getNextStatus, Todo, TodoEvent, TodoStatus } from '@gus/todo';
 
 @Component({
   selector: 'gus-root',
@@ -26,13 +26,21 @@ export class AppComponent {
       .subscribe(() => this.fetchTodos());
   }
 
-  public updateTodo(id: string, status: TodoStatus) {
+  public handleReduce(event: TodoEvent) {
+    if (this[`${event.type}Todo`]) {
+      this[`${event.type}Todo`](event.id, event.payload);
+    } else {
+      console.warn('Event not handled by this component!');
+    }
+  }
+
+  private updateTodo(id: string, status: TodoStatus) {
     this.http
       .put('/api/todos', { id, status: getNextStatus(status) })
       .subscribe(() => this.fetchTodos());
   }
 
-  public deleteTodo(id: string) {
+  private deleteTodo(id: string) {
     this.http.delete(`/api/todos/${id}`).subscribe(() => this.fetchTodos());
   }
 }

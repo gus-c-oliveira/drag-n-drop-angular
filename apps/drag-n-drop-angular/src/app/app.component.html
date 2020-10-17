@@ -4,8 +4,6 @@
   Add Todo
 </button>
 
-<div *ngFor="let todo of todos" class="todo">
-  <span class="todo__info">#{{ todo.id }} - Status: {{ todo.status }}</span>
-  <span (click)="updateTodo(todo.id, todo.status)" class="update">Update</span>
-  <span (click)="deleteTodo(todo.id)" class="delete">Delete</span>
+<div *ngFor="let todo of todos">
+  <gus-todo-card [todo]="todo" (reduce)="handleReduce($event)"></gus-todo-card>
 </div>
