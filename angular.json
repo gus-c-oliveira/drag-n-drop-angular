@@ -25,7 +25,10 @@
               "apps/drag-n-drop-angular/src/favicon.ico",
               "apps/drag-n-drop-angular/src/assets"
             ],
-            "styles": ["apps/drag-n-drop-angular/src/styles.scss"],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "apps/drag-n-drop-angular/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
