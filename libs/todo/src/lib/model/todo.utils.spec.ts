@@ -12,7 +12,7 @@ describe('getAllTodoStatus', () => {
   });
 });
 
-describe('getNextTodoStatus', () => {
+describe('getNextStatus', () => {
   it('should return the next todo status', () => {
     const currentStatus: TodoStatus[] = [
       TodoStatus.TODO,
