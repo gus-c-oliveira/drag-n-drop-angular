@@ -4,7 +4,8 @@ import {
 } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
-import { getNextStatus, mockTodos, TodoStatus } from '../model/index';
+import { mockTodos, TodoStatus } from '../model/index';
+import { getNextStatus } from '../utils/index';
 import { baseURL, TodoService } from './todo.service';
 
 describe('TodoService', () => {

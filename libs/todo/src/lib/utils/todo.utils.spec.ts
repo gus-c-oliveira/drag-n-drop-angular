@@ -1,4 +1,4 @@
-import { TodoStatus } from './todo.model';
+import { TodoStatus } from '../model/index';
 import { getAllTodoStatus, getNextStatus } from './todo.utils';
 
 describe('getAllTodoStatus', () => {

@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { getNextStatus, Todo, TodoStatus } from '../model/index';
+import { Todo, TodoStatus } from '../model/index';
+import { getNextStatus } from '../utils/index';
 
 export const baseURL = '/api/todos';
 
