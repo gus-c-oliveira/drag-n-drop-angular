@@ -94,7 +94,7 @@ export class AppComponent {
           );
           this.todosByStatus[updatedTodo.status].push(updatedTodo);
         },
-        (error) => console.log('Error updating todo, please try again!')
+        (error) => console.warn('Error updating todo, please try again!')
       );
   }
 
@@ -108,7 +108,7 @@ export class AppComponent {
             (item) => item.id !== id
           );
         },
-        (error) => console.log('Error deleting todo, please try again!')
+        (error) => console.warn('Error deleting todo, please try again!')
       );
   }
 
