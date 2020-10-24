@@ -1,4 +1,4 @@
-import { TodoStatus } from './todo.model';
+import { TodoStatus } from '../model/index';
 
 export const getAllTodoStatus = () => {
   const possibleStatus = [];

@@ -4,7 +4,8 @@ import {
 } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
-import { getNextStatus, mockTodos, TodoStatus } from '../model/index';
+import { mockTodos, TodoStatus } from '../model/index';
+import { getNextStatus } from '../utils/index';
 import { baseURL, TodoService } from './todo.service';
 
 describe('TodoService', () => {
@@ -65,25 +66,6 @@ describe('TodoService', () => {
       const req = http.expectOne(baseURL);
       expect(req.request.method).toEqual('PUT');
       expect(req.request.body).toEqual({ id, status });
-
-      req.flush({});
-    });
-  });
-
-  describe('updateTodoToNextStatus', () => {
-    it('should send a PUT request to update a todo item to the next status', (done) => {
-      const id = '7';
-      const currentStatus: TodoStatus = TodoStatus.WIP;
-      service
-        .updateTodoToNextStatus(id, currentStatus)
-        .subscribe((_) => done());
-
-      const req = http.expectOne(baseURL);
-      expect(req.request.method).toEqual('PUT');
-      expect(req.request.body).toEqual({
-        id,
-        status: getNextStatus(currentStatus),
-      });
 
       req.flush({});
     });

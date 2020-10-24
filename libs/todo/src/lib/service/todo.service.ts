@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { getNextStatus, Todo, TodoStatus } from '../model/index';
+import { Todo, TodoStatus } from '../model/index';
+import { getNextStatus } from '../utils/index';
 
 export const baseURL = '/api/todos';
 
@@ -21,10 +22,6 @@ export class TodoService {
 
   public updateTodo(id: string, status: TodoStatus) {
     return this.http.put(baseURL, { id, status });
-  }
-
-  public updateTodoToNextStatus(id: string, status: TodoStatus) {
-    return this.http.put(baseURL, { id, status: getNextStatus(status) });
   }
 
   public deleteTodo(id: string) {

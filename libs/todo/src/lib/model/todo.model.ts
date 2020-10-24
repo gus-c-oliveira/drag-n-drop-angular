@@ -11,7 +11,6 @@ export interface Todo {
 }
 
 export interface TodoEvent {
-  id: string;
+  todo: Todo;
   type: string;
-  payload?: any;
 }

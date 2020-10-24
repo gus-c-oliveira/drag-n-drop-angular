@@ -2,13 +2,24 @@
   <span class="todo__info"> #{{ todo.id }} - Status: {{ todo.status }} </span>
   <span
     (click)="
-      handleReduce({ id: todo.id, type: 'update', payload: todo.status })
+      handleReduce({
+        todo: todo,
+        type: 'advance'
+      })
     "
-    class="update"
+    class="advance"
   >
-    Update
+    Advance
   </span>
-  <span (click)="handleReduce({ id: todo.id, type: 'delete' })" class="delete">
+  <span
+    (click)="
+      handleReduce({
+        todo: todo,
+        type: 'delete'
+      })
+    "
+    class="delete"
+  >
     Delete
   </span>
 </div>
