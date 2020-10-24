@@ -7,7 +7,9 @@
 
   text-align: center;
 
-  border: 1px solid #eee;
+  background-color: var(--color-background);
+  border: 1px solid var(--color-white);
+  border-radius: 0.5rem;
 
   &__info {
     grid-column: span 2;
