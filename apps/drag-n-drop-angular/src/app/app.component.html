@@ -1,9 +1,27 @@
-<h1>To-Do App</h1>
+<header>
+  <h1>To-Do App</h1>
 
-<button id="add-todo" (click)="addTodo()">
-  Add Todo
-</button>
+  <button id="add-todo" (click)="addTodo()">
+    Add Todo
+  </button>
+</header>
 
-<div *ngFor="let todo of todos">
-  <gus-todo-card [todo]="todo" (reduce)="handleReduce($event)"></gus-todo-card>
+<div class="list">
+  <div
+    *ngFor="let status of allTodoStatus"
+    cdkDropList
+    [id]="status"
+    [ngClass]="'list__' + status"
+    [cdkDropListConnectedTo]="statusListConnections[status]"
+    [cdkDropListData]="todosByStatus[status]"
+  >
+    <gus-todo-card
+      *ngFor="let item of todosByStatus[status]"
+      cdkDrag
+      [id]="item.id"
+      [todo]="item"
+      (reduce)="handleReduce($event)"
+      (cdkDragDropped)="itemDropped($event)"
+    ></gus-todo-card>
+  </div>
 </div>

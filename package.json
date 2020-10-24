@@ -12,6 +12,7 @@
     "lint": "nx workspace-lint && ng lint",
     "stylelint": "stylelint libs/**/*.scss && stylelint apps/**/*.scss",
     "e2e": "ng e2e",
+    "e2e:watch": "npx nx e2e drag-n-drop-angular-e2e --watch",
     "affected:apps": "nx affected:apps",
     "affected:libs": "nx affected:libs",
     "affected:build": "nx affected:build",
