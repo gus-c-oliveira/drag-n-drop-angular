@@ -1,5 +1,5 @@
 import { mockTodos, Todo, TodoStatus } from '@gus/todo';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 @Injectable()
 export class AppService {
@@ -16,6 +16,7 @@ export class AppService {
       id,
       status,
     });
+    return { id, status };
   }
 
   private createNewId() {
@@ -31,6 +32,9 @@ export class AppService {
     const todo = this.todos.find((item) => item.id === id);
     if (todo) {
       todo.status = status;
+      return todo;
+    } else {
+      throw new NotFoundException();
     }
   }
 
