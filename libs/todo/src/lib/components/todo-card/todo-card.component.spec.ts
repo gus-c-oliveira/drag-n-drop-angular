@@ -33,14 +33,14 @@ describe('TodoCardComponent', () => {
   });
 
   it('should display the advance trigger', () => {
-    const advanceTrigger = fixture.debugElement.query(By.css('.advance'))
+    const advanceTrigger = fixture.debugElement.query(By.css('.todo__advance'))
       .nativeElement;
     expect(advanceTrigger).toBeTruthy();
   });
 
   it('should emit advance event when clicking the advance trigger', () => {
     spyOn(component.reduce, 'emit');
-    const advanceTrigger = fixture.debugElement.query(By.css('.advance'))
+    const advanceTrigger = fixture.debugElement.query(By.css('.todo__advance'))
       .nativeElement;
     advanceTrigger.click();
     expect(component.reduce.emit).toHaveBeenCalled();
@@ -51,14 +51,14 @@ describe('TodoCardComponent', () => {
   });
 
   it('should display the delete trigger', () => {
-    const deleteTrigger = fixture.debugElement.query(By.css('.delete'))
+    const deleteTrigger = fixture.debugElement.query(By.css('.todo__delete'))
       .nativeElement;
     expect(deleteTrigger).toBeTruthy();
   });
 
   it('should emit delete event when clicking the delete trigger', () => {
     spyOn(component.reduce, 'emit');
-    const deleteTrigger = fixture.debugElement.query(By.css('.delete'))
+    const deleteTrigger = fixture.debugElement.query(By.css('.todo__delete'))
       .nativeElement;
     deleteTrigger.click();
     expect(component.reduce.emit).toHaveBeenCalled();
