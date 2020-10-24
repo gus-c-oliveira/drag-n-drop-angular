@@ -15,4 +15,13 @@
   &__info {
     grid-column: span 2;
   }
+
+  &__advance,
+  &__delete {
+    display: inline-block;
+    width: max-content;
+    margin: 0 auto;
+
+    cursor: pointer;
+  }
 }
