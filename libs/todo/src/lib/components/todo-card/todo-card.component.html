@@ -3,21 +3,19 @@
   <span
     (click)="
       handleReduce({
-        id: todo.id,
-        type: 'update',
-        payload: todo.status
+        todo: todo,
+        type: 'advance'
       })
     "
-    class="update"
+    class="advance"
   >
-    Update
+    Advance
   </span>
   <span
     (click)="
       handleReduce({
-        id: todo.id,
-        type: 'delete',
-        payload: todo.status
+        todo: todo,
+        type: 'delete'
       })
     "
     class="delete"

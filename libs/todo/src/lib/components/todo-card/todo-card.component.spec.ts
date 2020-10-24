@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { emit } from 'process';
 
 import { mockTodos, TodoStatus } from '../../model/index';
 import { TodoCardComponent } from './todo-card.component';
@@ -33,22 +32,21 @@ describe('TodoCardComponent', () => {
     expect(info).toEqual('#0 - Status: TODO');
   });
 
-  it('should display the update trigger', () => {
-    const updateTrigger = fixture.debugElement.query(By.css('.update'))
+  it('should display the advance trigger', () => {
+    const advanceTrigger = fixture.debugElement.query(By.css('.advance'))
       .nativeElement;
-    expect(updateTrigger).toBeTruthy();
+    expect(advanceTrigger).toBeTruthy();
   });
 
-  it('should emit update event when clicking the update trigger', () => {
+  it('should emit advance event when clicking the advance trigger', () => {
     spyOn(component.reduce, 'emit');
-    const updateTrigger = fixture.debugElement.query(By.css('.update'))
+    const advanceTrigger = fixture.debugElement.query(By.css('.advance'))
       .nativeElement;
-    updateTrigger.click();
+    advanceTrigger.click();
     expect(component.reduce.emit).toHaveBeenCalled();
     expect(component.reduce.emit).toHaveBeenCalledWith({
-      id: '0',
-      type: 'update',
-      payload: TodoStatus.TODO,
+      todo: { id: '0', status: TodoStatus.TODO },
+      type: 'advance',
     });
   });
 
@@ -65,9 +63,8 @@ describe('TodoCardComponent', () => {
     deleteTrigger.click();
     expect(component.reduce.emit).toHaveBeenCalled();
     expect(component.reduce.emit).toHaveBeenCalledWith({
-      id: '0',
+      todo: { id: '0', status: TodoStatus.TODO },
       type: 'delete',
-      payload: TodoStatus.TODO,
     });
   });
 });
