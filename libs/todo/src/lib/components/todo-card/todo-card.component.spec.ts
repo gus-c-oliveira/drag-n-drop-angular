@@ -67,6 +67,7 @@ describe('TodoCardComponent', () => {
     expect(component.reduce.emit).toHaveBeenCalledWith({
       id: '0',
       type: 'delete',
+      payload: TodoStatus.TODO,
     });
   });
 });
