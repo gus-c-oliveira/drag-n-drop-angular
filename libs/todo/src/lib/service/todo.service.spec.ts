@@ -71,25 +71,6 @@ describe('TodoService', () => {
     });
   });
 
-  describe('updateTodoToNextStatus', () => {
-    it('should send a PUT request to update a todo item to the next status', (done) => {
-      const id = '7';
-      const currentStatus: TodoStatus = TodoStatus.WIP;
-      service
-        .updateTodoToNextStatus(id, currentStatus)
-        .subscribe((_) => done());
-
-      const req = http.expectOne(baseURL);
-      expect(req.request.method).toEqual('PUT');
-      expect(req.request.body).toEqual({
-        id,
-        status: getNextStatus(currentStatus),
-      });
-
-      req.flush({});
-    });
-  });
-
   describe('deleteTodo', () => {
     it('should send a DELETE request to delete a todo item', (done) => {
       const id = '3';

@@ -24,10 +24,6 @@ export class TodoService {
     return this.http.put(baseURL, { id, status });
   }
 
-  public updateTodoToNextStatus(id: string, status: TodoStatus) {
-    return this.http.put(baseURL, { id, status: getNextStatus(status) });
-  }
-
   public deleteTodo(id: string) {
     return this.http.delete(`${baseURL}/${id}`);
   }

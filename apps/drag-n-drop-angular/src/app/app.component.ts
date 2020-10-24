@@ -1,11 +1,8 @@
-import {
-  CdkDragDrop,
-  moveItemInArray,
-  transferArrayItem,
-} from '@angular/cdk/drag-drop';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component } from '@angular/core';
 import {
   getAllTodoStatus,
+  getNextStatus,
   Todo,
   TodoEvent,
   TodoService,
@@ -84,7 +81,7 @@ export class AppComponent {
   private advanceTodo(todo: Todo) {
     this.removeTodoFromStatus(todo);
     this.todoService
-      .updateTodoToNextStatus(todo.id, todo.status)
+      .updateTodo(todo.id, getNextStatus(todo.status))
       .pipe(take(1))
       .subscribe(
         (response) => {
