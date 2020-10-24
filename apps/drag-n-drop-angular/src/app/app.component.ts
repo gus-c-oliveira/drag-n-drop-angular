@@ -48,15 +48,17 @@ export class AppComponent {
       .getTodos()
       .pipe(take(1))
       .subscribe(
-        (todos) => {
-          todos.forEach((item) => {
-            this.todosByStatus[item.status].push(item);
-          });
-        },
+        (todos) => this.populateTodosByStatus(todos),
         (error) => {
           console.warn('Error loading todos, please refresh page!');
         }
       );
+  }
+
+  private populateTodosByStatus(todos: Todo[]) {
+    todos.forEach((item) => {
+      this.todosByStatus[item.status].push(item);
+    });
   }
 
   public addTodo() {
