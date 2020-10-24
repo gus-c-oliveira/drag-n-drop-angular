@@ -83,19 +83,33 @@ export class AppComponent {
   }
 
   private updateTodo(id: string, status: TodoStatus) {
+    this.removeTodoFromStatus({ id, status }, status);
     this.todoService
       .updateTodoToNextStatus(id, status)
       .pipe(take(1))
       .subscribe(
         (response) => {
           const updatedTodo = response as Todo;
-          this.todosByStatus[status] = this.todosByStatus[status].filter(
-            (item) => item.id !== id
-          );
-          this.todosByStatus[updatedTodo.status].push(updatedTodo);
+          this.addTodoToStatus(updatedTodo, updatedTodo.status);
         },
-        (error) => console.warn('Error updating todo, please try again!')
+        (error) => {
+          this.addTodoToStatus({ id, status }, status);
+          console.warn('Error updating todo, please try again!');
+        }
       );
+  }
+
+  private removeTodoFromStatus(todo: Todo, status: TodoStatus = null) {
+    if (!status) {
+      status = todo.status;
+    }
+    this.todosByStatus[status] = this.todosByStatus[status].filter(
+      (item) => item.id !== todo.id
+    );
+  }
+
+  private addTodoToStatus(todo: Todo, status: TodoStatus) {
+    this.todosByStatus[status].push(todo);
   }
 
   private deleteTodo(id: string, status: TodoStatus) {
@@ -104,9 +118,7 @@ export class AppComponent {
       .pipe(take(1))
       .subscribe(
         (_) => {
-          this.todosByStatus[status] = this.todosByStatus[status].filter(
-            (item) => item.id !== id
-          );
+          this.removeTodoFromStatus({ id, status });
         },
         (error) => console.warn('Error deleting todo, please try again!')
       );
@@ -119,18 +131,18 @@ export class AppComponent {
     const id = event.item.element.nativeElement.id;
     const status = event.container.id as TodoStatus;
     const previousStatus = event.previousContainer.id as TodoStatus;
+    this.removeTodoFromStatus({ id, status }, previousStatus);
     this.todoService
       .updateTodo(id, status)
       .pipe(take(1))
       .subscribe(
         (response) => {
-          const updatedTodo = response as Todo;
-          this.todosByStatus[previousStatus] = this.todosByStatus[
-            previousStatus
-          ].filter((item) => item.id !== id);
-          this.todosByStatus[status].push(updatedTodo);
+          this.addTodoToStatus(response as Todo, status);
         },
-        (error) => console.warn('Error updating todo, please try again!')
+        (error) => {
+          this.addTodoToStatus({ id, status }, previousStatus);
+          console.warn('Error updating todo, please try again!');
+        }
       );
   }
 }
