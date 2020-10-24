@@ -67,8 +67,7 @@ export class AppComponent {
       .pipe(take(1))
       .subscribe(
         (response) => {
-          const newTodo = response as Todo;
-          this.todosByStatus[newTodo.status].push(newTodo);
+          this.addTodoToStatus(response as Todo);
         },
         (error) => console.warn('Error creating todo, please try again!')
       );
@@ -76,24 +75,23 @@ export class AppComponent {
 
   public handleReduce(event: TodoEvent) {
     if (this[`${event.type}Todo`]) {
-      this[`${event.type}Todo`](event.id, event.payload);
+      this[`${event.type}Todo`](event.todo);
     } else {
       console.warn('Event not handled by this component!');
     }
   }
 
-  private updateTodo(id: string, status: TodoStatus) {
-    this.removeTodoFromStatus({ id, status }, status);
+  private advanceTodo(todo: Todo) {
+    this.removeTodoFromStatus(todo);
     this.todoService
-      .updateTodoToNextStatus(id, status)
+      .updateTodoToNextStatus(todo.id, todo.status)
       .pipe(take(1))
       .subscribe(
         (response) => {
-          const updatedTodo = response as Todo;
-          this.addTodoToStatus(updatedTodo, updatedTodo.status);
+          this.addTodoToStatus(response as Todo);
         },
         (error) => {
-          this.addTodoToStatus({ id, status }, status);
+          this.addTodoToStatus(todo);
           console.warn('Error updating todo, please try again!');
         }
       );
@@ -108,17 +106,20 @@ export class AppComponent {
     );
   }
 
-  private addTodoToStatus(todo: Todo, status: TodoStatus) {
+  private addTodoToStatus(todo: Todo, status: TodoStatus = null) {
+    if (!status) {
+      status = todo.status;
+    }
     this.todosByStatus[status].push(todo);
   }
 
-  private deleteTodo(id: string, status: TodoStatus) {
+  private deleteTodo(todo: Todo) {
     this.todoService
-      .deleteTodo(id)
+      .deleteTodo(todo.id)
       .pipe(take(1))
       .subscribe(
         (_) => {
-          this.removeTodoFromStatus({ id, status });
+          this.removeTodoFromStatus(todo);
         },
         (error) => console.warn('Error deleting todo, please try again!')
       );
@@ -137,7 +138,7 @@ export class AppComponent {
       .pipe(take(1))
       .subscribe(
         (response) => {
-          this.addTodoToStatus(response as Todo, status);
+          this.addTodoToStatus(response as Todo);
         },
         (error) => {
           this.addTodoToStatus({ id, status }, previousStatus);

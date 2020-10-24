@@ -20,10 +20,10 @@ describe('drag-n-drop-angular', () => {
     getTodos().should((items) => expect(items.length).equal(1));
   });
 
-  it('should update a todo status when clicking the update inside todo card', () => {
+  it('should advance a todo status when clicking the advance inside todo card', () => {
     getAddTodoButton().click();
     cy.wait(50);
-    cy.get('span.update').last().trigger('click');
+    cy.get('span.advance').last().trigger('click');
     getTodos().should((items) => expect(items[1].innerHTML).contain('WIP'));
     cy.get('span.delete').last().trigger('click');
   });
