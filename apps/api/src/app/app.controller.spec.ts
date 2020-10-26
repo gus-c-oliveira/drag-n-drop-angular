@@ -7,6 +7,7 @@ import { AppService } from './app.service';
 describe('AppController', () => {
   let app: TestingModule;
   let appController: AppController;
+  const testItem = { title: 'Test Item', status: TodoStatus.TODO };
 
   beforeEach(async () => {
     app = await Test.createTestingModule({
@@ -28,15 +29,16 @@ describe('AppController', () => {
 
   describe('addTodo', () => {
     it('should create a todo', () => {
-      appController.addTodo({ status: TodoStatus.WIP });
+      appController.addTodo(testItem);
       const todos = appController.getTodos();
-      expect(todos[todos.length - 1].status).toEqual(TodoStatus.WIP);
+      expect(todos[todos.length - 1].status).toEqual(testItem.status);
+      expect(todos[todos.length - 1].title).toEqual(testItem.title);
     });
   });
 
   describe('updateTodo', () => {
     it('should update todo with new status', () => {
-      appController.addTodo({ status: TodoStatus.WIP });
+      appController.addTodo(testItem);
       let todos = appController.getTodos();
       const newTodoId = todos[todos.length - 1].id;
       appController.updateTodo({ id: newTodoId, status: TodoStatus.REVIEW });
@@ -49,7 +51,7 @@ describe('AppController', () => {
   describe('deleteTodo', () => {
     it('should delete a todo', () => {
       const originalLength = appController.getTodos().length;
-      appController.addTodo({ status: TodoStatus.WIP });
+      appController.addTodo(testItem);
       const todos = appController.getTodos();
       appController.deleteTodo({ id: todos[todos.length - 1].id });
       expect(appController.getTodos().length).toEqual(originalLength);

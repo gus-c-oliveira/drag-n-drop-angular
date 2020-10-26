@@ -10,13 +10,11 @@ export class AppService {
     return this.todos;
   }
 
-  public addTodo(status: TodoStatus) {
+  public addTodo(title: string, status: TodoStatus) {
     const id = this.createNewId();
-    this.todos.push({
-      id,
-      status,
-    });
-    return { id, status };
+    const newTodo = { id, status, title };
+    this.todos.push(newTodo);
+    return newTodo;
   }
 
   private createNewId() {
