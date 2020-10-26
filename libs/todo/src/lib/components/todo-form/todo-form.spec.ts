@@ -3,9 +3,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { By } from '@angular/platform-browser';
-import { getElementBySelector } from '../../testing/testing';
 
+import { TodoStatus } from '../../model';
+import { getElementBySelector } from '../../testing/testing';
 import { TodoFormComponent } from './todo-form.component';
 
 describe('TodoFormComponent', () => {
@@ -27,6 +27,7 @@ describe('TodoFormComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TodoFormComponent);
     component = fixture.componentInstance;
+    component.enableOverlayWarning = false;
   });
 
   it('should create', () => {
@@ -53,8 +54,29 @@ describe('TodoFormComponent', () => {
     expect(saveTrigger).toBeTruthy();
   });
 
+  it('should emit form data when clicking the emit trigger', () => {
+    spyOn(component.data, 'emit');
+    const testData = {
+      title: 'Test Title',
+      status: TodoStatus.DONE,
+    };
+    component.form.setValue(testData);
+    const saveTrigger = getElementBySelector(fixture, '.action__save');
+    saveTrigger.click();
+    expect(component.data.emit).toHaveBeenCalledTimes(1);
+    expect(component.data.emit).toHaveBeenCalledWith(testData);
+  });
+
   it('should display the cancel trigger', () => {
     const cancelTrigger = getElementBySelector(fixture, '.action__cancel');
     expect(cancelTrigger).toBeTruthy();
+  });
+
+  it('should emit null data when clicking the cancel trigger', () => {
+    spyOn(component.data, 'emit');
+    const cancelTrigger = getElementBySelector(fixture, '.action__cancel');
+    cancelTrigger.click();
+    expect(component.data.emit).toHaveBeenCalledTimes(1);
+    expect(component.data.emit).toHaveBeenCalledWith(null);
   });
 });

@@ -17,6 +17,6 @@
 </form>
 
 <div class="action">
-  <span class="action__save">Save</span>
-  <span class="action__cancel">Cancel</span>
+  <span class="action__save" (click)="emit(form.value)">Save</span>
+  <span class="action__cancel" (click)="emit(null)">Cancel</span>
 </div>
