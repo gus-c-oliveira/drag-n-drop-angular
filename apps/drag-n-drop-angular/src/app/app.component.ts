@@ -100,7 +100,7 @@ export class AppComponent {
 
   private getOverlayRef(positionStrategy: GlobalPositionStrategy) {
     return this.overlay.create({
-      width: '80%',
+      width: '50%',
       hasBackdrop: true,
       disposeOnNavigation: true,
       backdropClass: ['form-overlay', 'cdk-overlay-dark-backdrop'],
