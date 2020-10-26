@@ -1,4 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { OverlayRef } from '@angular/cdk/overlay';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+
+import { getAllTodoStatus } from '../../utils';
 
 @Component({
   selector: 'gus-todo-form',
@@ -6,4 +10,12 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrls: ['./todo-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TodoFormComponent {}
+export class TodoFormComponent {
+  @Input() public overlayRef: OverlayRef = null;
+
+  public allTodoStatus = getAllTodoStatus();
+  public form = new FormGroup({
+    title: new FormControl('', [Validators.required]),
+    status: new FormControl('', [Validators.required]),
+  });
+}

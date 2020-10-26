@@ -1,4 +1,5 @@
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { OverlayModule } from '@angular/cdk/overlay';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -13,6 +14,7 @@ import { AppComponent } from './app.component';
     BrowserAnimationsModule,
     BrowserModule,
     DragDropModule,
+    OverlayModule,
 
     // Lib
     TodoModule,

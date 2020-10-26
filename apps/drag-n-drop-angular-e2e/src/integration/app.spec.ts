@@ -9,10 +9,11 @@ describe('drag-n-drop-angular', () => {
     getTodos().should((items) => expect(items.length).equal(1));
   });
 
-  it('should create a new todo item when clicking the add todo button', () => {
-    getAddTodoButton().click();
-    cy.wait(50);
-    getTodos().should((items) => expect(items.length).equal(2));
+  describe('add task', () => {
+    it('should display the todo form component when clicking the add item button', () => {
+      getAddTodoButton().click();
+      cy.get('gus-todo-form').should((items) => expect(items.length).equal(1));
+    });
   });
 
   it('should delete a todo item when clicking the delete inside todo card', () => {

@@ -1,10 +1,17 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import {
+  GlobalPositionStrategy,
+  Overlay,
+  OverlayRef,
+} from '@angular/cdk/overlay';
+import { ComponentPortal } from '@angular/cdk/portal';
 import { Component } from '@angular/core';
 import {
   getAllTodoStatus,
   getNextStatus,
   Todo,
   TodoEvent,
+  TodoFormComponent,
   TodoService,
   TodoStatus,
 } from '@gus/todo';
@@ -20,7 +27,12 @@ export class AppComponent {
   public statusListConnections: { [status: string]: string[] } = {};
   public todosByStatus: { [status: string]: Todo[] } = {};
 
-  public constructor(private todoService: TodoService) {
+  private overlayRef: OverlayRef;
+
+  public constructor(
+    private todoService: TodoService,
+    private overlay: Overlay
+  ) {
     this.initTodosByStatus();
     this.initStatusListConnections();
     this.fetchTodos();
@@ -59,6 +71,7 @@ export class AppComponent {
   }
 
   public addTodo() {
+    this.openTodoForm();
     this.todoService
       .createTodo()
       .pipe(take(1))
@@ -68,6 +81,49 @@ export class AppComponent {
         },
         (error) => console.warn('Error creating todo, please try again!')
       );
+  }
+
+  private openTodoForm() {
+    const positionStrategy = this.getPositionStrategy();
+    this.overlayRef = this.getOverlayRef(positionStrategy);
+    this.configureOverlayDisposeOnBackdropClick();
+    this.attachFormToOverlay();
+  }
+
+  private getPositionStrategy() {
+    return this.overlay
+      .position()
+      .global()
+      .centerHorizontally()
+      .centerVertically();
+  }
+
+  private getOverlayRef(positionStrategy: GlobalPositionStrategy) {
+    return this.overlay.create({
+      width: '80%',
+      hasBackdrop: true,
+      disposeOnNavigation: true,
+      backdropClass: ['form-overlay', 'cdk-overlay-dark-backdrop'],
+      positionStrategy,
+    });
+  }
+
+  private configureOverlayDisposeOnBackdropClick() {
+    this.overlayRef.backdropClick().subscribe((_) => this.overlayRef.dispose());
+  }
+
+  private attachFormToOverlay() {
+    const portal = new ComponentPortal(TodoFormComponent);
+    const formComponent = this.overlayRef.attach<TodoFormComponent>(portal)
+      .instance;
+    formComponent.overlayRef = this.overlayRef;
+  }
+
+  private addTodoToStatus(todo: Todo, status: TodoStatus = null) {
+    if (!status) {
+      status = todo.status;
+    }
+    this.todosByStatus[status].push(todo);
   }
 
   public handleReduce(event: TodoEvent) {
@@ -101,13 +157,6 @@ export class AppComponent {
     this.todosByStatus[status] = this.todosByStatus[status].filter(
       (item) => item.id !== todo.id
     );
-  }
-
-  private addTodoToStatus(todo: Todo, status: TodoStatus = null) {
-    if (!status) {
-      status = todo.status;
-    }
-    this.todosByStatus[status].push(todo);
   }
 
   private deleteTodo(todo: Todo) {
