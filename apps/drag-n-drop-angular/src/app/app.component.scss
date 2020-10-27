@@ -45,6 +45,18 @@ header {
     box-shadow: 0 0.5rem 1rem var(--color-box-shadow);
   }
 
+  &__header {
+    margin-top: 0.5rem;
+
+    color: var(--color-black);
+    font-size: 2rem;
+    text-align: center;
+
+    background-color: var(--color-background);
+    border: 1px solid var(--color-white);
+    border-radius: 1rem 1rem 0 0;
+  }
+
   &__TODO {
     background-image: linear-gradient(to right, var(--color-primary-extra-light), var(--color-primary-light));
   }
