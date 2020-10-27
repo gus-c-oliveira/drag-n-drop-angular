@@ -2,6 +2,8 @@
 
 A full stack demo app to organize tasks.
 
+![drag-n-drop](https://github.com/gus-c-oliveira/demo-gifs/blob/master/drag-n-drop-angular.gif)
+
 # Technologies
 
 - [Angular](https://angular.io/) for user interface
