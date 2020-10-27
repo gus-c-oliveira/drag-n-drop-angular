@@ -72,22 +72,14 @@ export class AppComponent {
 
   public addTodo() {
     this.openTodoForm();
-    this.todoService
-      .createTodo()
-      .pipe(take(1))
-      .subscribe(
-        (response) => {
-          this.addTodoToStatus(response as Todo);
-        },
-        (error) => console.warn('Error creating todo, please try again!')
-      );
   }
 
   private openTodoForm() {
     const positionStrategy = this.getPositionStrategy();
     this.overlayRef = this.getOverlayRef(positionStrategy);
     this.configureOverlayDisposeOnBackdropClick();
-    this.attachFormToOverlay();
+    const formComponent = this.getFormInOverlay();
+    this.listenToFormData(formComponent);
   }
 
   private getPositionStrategy() {
@@ -112,11 +104,29 @@ export class AppComponent {
     this.overlayRef.backdropClick().subscribe((_) => this.overlayRef.dispose());
   }
 
-  private attachFormToOverlay() {
+  private getFormInOverlay() {
     const portal = new ComponentPortal(TodoFormComponent);
     const formComponent = this.overlayRef.attach<TodoFormComponent>(portal)
       .instance;
     formComponent.overlayRef = this.overlayRef;
+    return formComponent;
+  }
+
+  private listenToFormData(formComponent: TodoFormComponent) {
+    formComponent.data.pipe(take(1)).subscribe((data) => {
+      if (!data) {
+        return;
+      }
+      this.todoService
+        .createTodo(data.title, data.status)
+        .pipe(take(1))
+        .subscribe(
+          (response) => {
+            this.addTodoToStatus(response as Todo);
+          },
+          (error) => console.warn('Error creating todo, please try again!')
+        );
+    });
   }
 
   private addTodoToStatus(todo: Todo, status: TodoStatus = null) {
@@ -178,7 +188,10 @@ export class AppComponent {
     const id = event.item.element.nativeElement.id;
     const status = event.container.id as TodoStatus;
     const previousStatus = event.previousContainer.id as TodoStatus;
-    this.removeTodoFromStatus({ id, status }, previousStatus);
+    const todo = this.todosByStatus[previousStatus].find(
+      (item) => item.id === id
+    );
+    this.removeTodoFromStatus(todo, previousStatus);
     this.todoService
       .updateTodo(id, status)
       .pipe(take(1))
@@ -187,7 +200,7 @@ export class AppComponent {
           this.addTodoToStatus(response as Todo);
         },
         (error) => {
-          this.addTodoToStatus({ id, status }, previousStatus);
+          this.addTodoToStatus(todo, previousStatus);
           console.warn('Error updating todo, please try again!');
         }
       );
