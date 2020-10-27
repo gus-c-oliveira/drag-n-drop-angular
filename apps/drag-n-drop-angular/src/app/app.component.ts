@@ -1,10 +1,17 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import {
+  GlobalPositionStrategy,
+  Overlay,
+  OverlayRef,
+} from '@angular/cdk/overlay';
+import { ComponentPortal } from '@angular/cdk/portal';
 import { Component } from '@angular/core';
 import {
   getAllTodoStatus,
   getNextStatus,
   Todo,
   TodoEvent,
+  TodoFormComponent,
   TodoService,
   TodoStatus,
 } from '@gus/todo';
@@ -20,7 +27,12 @@ export class AppComponent {
   public statusListConnections: { [status: string]: string[] } = {};
   public todosByStatus: { [status: string]: Todo[] } = {};
 
-  public constructor(private todoService: TodoService) {
+  private overlayRef: OverlayRef;
+
+  public constructor(
+    private todoService: TodoService,
+    private overlay: Overlay
+  ) {
     this.initTodosByStatus();
     this.initStatusListConnections();
     this.fetchTodos();
@@ -59,15 +71,69 @@ export class AppComponent {
   }
 
   public addTodo() {
-    this.todoService
-      .createTodo()
-      .pipe(take(1))
-      .subscribe(
-        (response) => {
-          this.addTodoToStatus(response as Todo);
-        },
-        (error) => console.warn('Error creating todo, please try again!')
-      );
+    this.openTodoForm();
+  }
+
+  private openTodoForm() {
+    const positionStrategy = this.getPositionStrategy();
+    this.overlayRef = this.getOverlayRef(positionStrategy);
+    this.configureOverlayDisposeOnBackdropClick();
+    const formComponent = this.getFormInOverlay();
+    this.listenToFormData(formComponent);
+  }
+
+  private getPositionStrategy() {
+    return this.overlay
+      .position()
+      .global()
+      .centerHorizontally()
+      .centerVertically();
+  }
+
+  private getOverlayRef(positionStrategy: GlobalPositionStrategy) {
+    return this.overlay.create({
+      width: '50%',
+      hasBackdrop: true,
+      disposeOnNavigation: true,
+      backdropClass: ['form-overlay', 'cdk-overlay-dark-backdrop'],
+      positionStrategy,
+    });
+  }
+
+  private configureOverlayDisposeOnBackdropClick() {
+    this.overlayRef.backdropClick().subscribe((_) => this.overlayRef.dispose());
+  }
+
+  private getFormInOverlay() {
+    const portal = new ComponentPortal(TodoFormComponent);
+    const formComponent = this.overlayRef.attach<TodoFormComponent>(portal)
+      .instance;
+    formComponent.overlayRef = this.overlayRef;
+    return formComponent;
+  }
+
+  private listenToFormData(formComponent: TodoFormComponent) {
+    formComponent.data.pipe(take(1)).subscribe((data) => {
+      if (!data) {
+        return;
+      }
+      this.todoService
+        .createTodo(data.title, data.status)
+        .pipe(take(1))
+        .subscribe(
+          (response) => {
+            this.addTodoToStatus(response as Todo);
+          },
+          (error) => console.warn('Error creating todo, please try again!')
+        );
+    });
+  }
+
+  private addTodoToStatus(todo: Todo, status: TodoStatus = null) {
+    if (!status) {
+      status = todo.status;
+    }
+    this.todosByStatus[status].push(todo);
   }
 
   public handleReduce(event: TodoEvent) {
@@ -103,13 +169,6 @@ export class AppComponent {
     );
   }
 
-  private addTodoToStatus(todo: Todo, status: TodoStatus = null) {
-    if (!status) {
-      status = todo.status;
-    }
-    this.todosByStatus[status].push(todo);
-  }
-
   private deleteTodo(todo: Todo) {
     this.todoService
       .deleteTodo(todo.id)
@@ -129,7 +188,10 @@ export class AppComponent {
     const id = event.item.element.nativeElement.id;
     const status = event.container.id as TodoStatus;
     const previousStatus = event.previousContainer.id as TodoStatus;
-    this.removeTodoFromStatus({ id, status }, previousStatus);
+    const todo = this.todosByStatus[previousStatus].find(
+      (item) => item.id === id
+    );
+    this.removeTodoFromStatus(todo, previousStatus);
     this.todoService
       .updateTodo(id, status)
       .pipe(take(1))
@@ -138,7 +200,7 @@ export class AppComponent {
           this.addTodoToStatus(response as Todo);
         },
         (error) => {
-          this.addTodoToStatus({ id, status }, previousStatus);
+          this.addTodoToStatus(todo, previousStatus);
           console.warn('Error updating todo, please try again!');
         }
       );

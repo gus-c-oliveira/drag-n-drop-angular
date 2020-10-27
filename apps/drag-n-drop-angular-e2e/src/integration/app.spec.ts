@@ -1,4 +1,4 @@
-import { getAddTodoButton, getTodos } from '../support/app.po';
+import { createNewTodo, getTodos } from '../support/app.po';
 
 describe('drag-n-drop-angular', () => {
   beforeEach(() => {
@@ -9,9 +9,8 @@ describe('drag-n-drop-angular', () => {
     getTodos().should((items) => expect(items.length).equal(1));
   });
 
-  it('should create a new todo item when clicking the add todo button', () => {
-    getAddTodoButton().click();
-    cy.wait(50);
+  it('should add item using the todo-form', () => {
+    createNewTodo();
     getTodos().should((items) => expect(items.length).equal(2));
   });
 
@@ -21,10 +20,11 @@ describe('drag-n-drop-angular', () => {
   });
 
   it('should advance a todo status when clicking the advance inside todo card', () => {
-    getAddTodoButton().click();
-    cy.wait(50);
+    createNewTodo();
     cy.get('span.todo__advance').last().trigger('click');
-    getTodos().should((items) => expect(items[1].innerHTML).contain('WIP'));
+    cy.get('.list__WIP  gus-todo-card').should((items) =>
+      expect(items.length).equal(1)
+    );
     cy.get('span.todo__delete').last().trigger('click');
   });
 });

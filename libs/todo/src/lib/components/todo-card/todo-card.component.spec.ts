@@ -1,7 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 
-import { mockTodos, TodoStatus } from '../../model/index';
+import { mockTodos } from '../../model';
+import {
+  getElementBySelector,
+  getElementTextContentBySelector,
+} from '../../testing/testing';
 import { TodoCardComponent } from './todo-card.component';
 
 describe('TodoCardComponent', () => {
@@ -26,44 +29,38 @@ describe('TodoCardComponent', () => {
   });
 
   it('should display todo info', () => {
-    const info = fixture.debugElement
-      .query(By.css('.todo__info'))
-      .nativeElement.textContent.trim();
-    expect(info).toEqual('#0 - Status: TODO');
+    const info = getElementTextContentBySelector(fixture, '.todo__info');
+    expect(info).toEqual(`#${mockTodos[0].id}: ${mockTodos[0].title}`);
   });
 
   it('should display the advance trigger', () => {
-    const advanceTrigger = fixture.debugElement.query(By.css('.todo__advance'))
-      .nativeElement;
+    const advanceTrigger = getElementBySelector(fixture, '.todo__advance');
     expect(advanceTrigger).toBeTruthy();
   });
 
   it('should emit advance event when clicking the advance trigger', () => {
     spyOn(component.reduce, 'emit');
-    const advanceTrigger = fixture.debugElement.query(By.css('.todo__advance'))
-      .nativeElement;
+    const advanceTrigger = getElementBySelector(fixture, '.todo__advance');
     advanceTrigger.click();
     expect(component.reduce.emit).toHaveBeenCalled();
     expect(component.reduce.emit).toHaveBeenCalledWith({
-      todo: { id: '0', status: TodoStatus.TODO },
+      todo: mockTodos[0],
       type: 'advance',
     });
   });
 
   it('should display the delete trigger', () => {
-    const deleteTrigger = fixture.debugElement.query(By.css('.todo__delete'))
-      .nativeElement;
+    const deleteTrigger = getElementBySelector(fixture, '.todo__delete');
     expect(deleteTrigger).toBeTruthy();
   });
 
   it('should emit delete event when clicking the delete trigger', () => {
     spyOn(component.reduce, 'emit');
-    const deleteTrigger = fixture.debugElement.query(By.css('.todo__delete'))
-      .nativeElement;
+    const deleteTrigger = getElementBySelector(fixture, '.todo__delete');
     deleteTrigger.click();
     expect(component.reduce.emit).toHaveBeenCalled();
     expect(component.reduce.emit).toHaveBeenCalledWith({
-      todo: { id: '0', status: TodoStatus.TODO },
+      todo: mockTodos[0],
       type: 'delete',
     });
   });

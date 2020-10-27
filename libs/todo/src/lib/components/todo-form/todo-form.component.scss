@@ -1,0 +1,49 @@
+:host {
+  width: 100%;
+  padding: 2rem;
+
+  font-size: 1.6rem;
+
+  background-color: var(--color-background);
+  border-radius: 1rem;
+}
+
+h1 {
+  color: var(--color-primary-extra-dark);
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: 2rem auto;
+  padding: 1rem;
+
+  background-color: var(--color-white);
+  border-radius: 1rem;
+}
+
+.action {
+  width: max-content;
+  margin: 0 auto;
+
+  text-transform: uppercase;
+
+  > * {
+    cursor: pointer;
+  }
+
+  &__save {
+    color: var(--color-primary-extra-dark);
+    font-weight: bold;
+  }
+
+  &__cancel {
+    display: inline-block;
+    margin-left: 2rem;
+
+    font-weight: lighter;
+  }
+}

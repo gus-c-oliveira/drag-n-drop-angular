@@ -8,6 +8,7 @@ export enum TodoStatus {
 export interface Todo {
   id: string;
   status: TodoStatus;
+  title: string;
 }
 
 export interface TodoEvent {

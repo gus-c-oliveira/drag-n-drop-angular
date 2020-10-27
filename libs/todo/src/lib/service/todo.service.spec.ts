@@ -47,11 +47,13 @@ describe('TodoService', () => {
 
   describe('createTodo', () => {
     it('should send a POST request to create a new todo item', (done) => {
-      service.createTodo().subscribe((_) => done());
+      const title = 'Test item';
+      const status = TodoStatus.REVIEW;
+      service.createTodo(title, status).subscribe((_) => done());
 
       const req = http.expectOne(baseURL);
       expect(req.request.method).toEqual('POST');
-      expect(req.request.body).toEqual({ status: TodoStatus.TODO });
+      expect(req.request.body).toEqual({ title, status });
 
       req.flush({});
     });

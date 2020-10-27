@@ -15,6 +15,7 @@
     [cdkDropListConnectedTo]="statusListConnections[status]"
     [cdkDropListData]="todosByStatus[status]"
   >
+    <div class="list__header">{{ status }}</div>
     <gus-todo-card
       *ngFor="let item of todosByStatus[status]"
       cdkDrag

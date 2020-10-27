@@ -1,0 +1,17 @@
+@import './colors';
+
+.mat-input-element {
+  caret-color: var(--color-primary);
+}
+
+.mat-focused .mat-form-field-label {
+  color: var(--color-primary) !important;
+}
+
+.mat-form-field-underline {
+  background-color: var(--color-primary) !important;
+}
+
+.mat-form-field-ripple {
+  background-color: var(--color-primary) !important;
+}

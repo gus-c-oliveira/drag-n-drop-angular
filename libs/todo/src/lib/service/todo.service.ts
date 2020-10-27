@@ -16,8 +16,8 @@ export class TodoService {
     return this.http.get<Todo[]>(baseURL);
   }
 
-  public createTodo() {
-    return this.http.post(baseURL, { status: TodoStatus.TODO });
+  public createTodo(title: string, status: TodoStatus = TodoStatus.TODO) {
+    return this.http.post(baseURL, { title, status });
   }
 
   public updateTodo(id: string, status: TodoStatus) {

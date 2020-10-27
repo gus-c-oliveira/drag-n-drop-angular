@@ -21,7 +21,7 @@ export class AppController {
 
   @Post()
   addTodo(@Body() body) {
-    return this.appService.addTodo(body.status);
+    return this.appService.addTodo(body.title, body.status);
   }
 
   @Put()

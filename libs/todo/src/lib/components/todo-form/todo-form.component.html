@@ -1,0 +1,22 @@
+<h1>Create New Task</h1>
+
+<form [formGroup]="form">
+  <mat-form-field>
+    <mat-label>Title</mat-label>
+    <input matInput formControlName="title" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Status</mat-label>
+    <mat-select formControlName="status">
+      <mat-option *ngFor="let status of allTodoStatus" [value]="status">
+        {{ status }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>
+
+<div class="action">
+  <span class="action__save" (click)="emit(form.value)">Save</span>
+  <span class="action__cancel" (click)="emit(null)">Cancel</span>
+</div>
