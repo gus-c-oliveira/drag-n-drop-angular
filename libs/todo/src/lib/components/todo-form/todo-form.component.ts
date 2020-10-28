@@ -30,6 +30,9 @@ export class TodoFormComponent {
   public enableOverlayWarning = true;
 
   public emit(data: TodoFormData | null) {
+    if (data && !this.form.valid) {
+      return;
+    }
     this.data.emit(data);
     this.close();
   }

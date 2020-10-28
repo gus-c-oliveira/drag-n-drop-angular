@@ -31,13 +31,15 @@ form {
 
   text-transform: uppercase;
 
-  > * {
-    cursor: pointer;
+  &__save {
+    color: var(--color-primary-extra-light);
+    font-weight: bold;
   }
 
-  &__save {
+  &__save--enabled {
     color: var(--color-primary-extra-dark);
-    font-weight: bold;
+
+    cursor: pointer;
   }
 
   &__cancel {
@@ -45,5 +47,7 @@ form {
     margin-left: 2rem;
 
     font-weight: lighter;
+
+    cursor: pointer;
   }
 }
