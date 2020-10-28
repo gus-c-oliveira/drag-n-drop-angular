@@ -1,6 +1,7 @@
 <div *ngIf="todo" class="todo">
   <span class="todo__info"> #{{ todo.id }}: {{ todo.title }} </span>
   <span
+    *ngIf="todo.status !== 'DONE'"
     (click)="
       handleReduce({
         todo: todo,

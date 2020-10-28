@@ -1,6 +1,8 @@
 .todo {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas:
+    'info info'
+    'advance delete';
   row-gap: 0.5rem;
   margin: 1rem auto;
   padding: 1rem;
@@ -13,7 +15,15 @@
   border-radius: 0.5rem;
 
   &__info {
-    grid-column: span 2;
+    grid-area: info;
+  }
+
+  &__advance {
+    grid-area: advance;
+  }
+
+  &__delete {
+    grid-area: delete;
   }
 
   &__advance,
