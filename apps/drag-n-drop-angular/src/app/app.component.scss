@@ -31,13 +31,14 @@ header {
 }
 
 .list {
-  display: flex;
+  display: grid;
   flex: 1;
+  grid-template-columns: repeat(4, 1fr);
+  overflow-x: scroll;
 
   background-color: var(--color-white);
 
   > * {
-    flex: 1;
     margin: 1rem;
     padding: 0.5rem 1rem;
 
@@ -46,6 +47,7 @@ header {
   }
 
   &__header {
+    min-width: 20rem;
     margin-top: 0.5rem;
 
     color: var(--color-black);
