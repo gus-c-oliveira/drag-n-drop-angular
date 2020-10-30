@@ -21,7 +21,7 @@ describe('drag-n-drop-angular', () => {
 
   it('should advance a todo status when clicking the advance inside todo card', () => {
     createNewTodo();
-    cy.get('span.todo__advance').last().trigger('click');
+    cy.get('.todo__advance').last().trigger('click');
     cy.get('.list__WIP  gus-todo-card').should((items) =>
       expect(items.length).equal(1)
     );
