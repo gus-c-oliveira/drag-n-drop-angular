@@ -12,15 +12,15 @@
   >
     Advance
   </span>
-  <span
+  <img
+    class="todo__delete"
+    src="assets/img/todo/bin.svg"
+    alt="Delete"
     (click)="
       handleReduce({
         todo: todo,
         type: 'delete'
       })
     "
-    class="todo__delete"
-  >
-    Delete
-  </span>
+  />
 </div>

@@ -14,8 +14,8 @@ describe('drag-n-drop-angular', () => {
     getTodos().should((items) => expect(items.length).equal(2));
   });
 
-  it('should delete a todo item when clicking the delete inside todo card', () => {
-    cy.get('span.todo__delete').last().trigger('click');
+  it('should delete a todo item when clicking the delete icon inside todo card', () => {
+    cy.get('.todo__delete').last().trigger('click');
     getTodos().should((items) => expect(items.length).equal(1));
   });
 
@@ -25,6 +25,6 @@ describe('drag-n-drop-angular', () => {
     cy.get('.list__WIP  gus-todo-card').should((items) =>
       expect(items.length).equal(1)
     );
-    cy.get('span.todo__delete').last().trigger('click');
+    cy.get('.todo__delete').last().trigger('click');
   });
 });
