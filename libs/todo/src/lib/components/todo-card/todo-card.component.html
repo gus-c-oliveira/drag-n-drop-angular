@@ -2,7 +2,7 @@
   <span class="todo__info"> #{{ todo.id }}: {{ todo.title }} </span>
   <img
     class="todo__delete"
-    src="assets/img/todo/bin.svg"
+    [src]="todoIconSrc + 'bin.svg'"
     alt="Delete"
     (click)="
       handleReduce({
@@ -14,7 +14,7 @@
   <img
     *ngIf="todo.status !== 'DONE'"
     class="todo__advance"
-    src="assets/img/todo/arrow-right.svg"
+    [src]="todoIconSrc + 'arrow-right.svg'"
     alt="Advance"
     (click)="
       handleReduce({

@@ -3,7 +3,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TodoModule } from '@gus/todo';
+import { TODO_ICON_SRC, TodoModule } from '@gus/todo';
 
 import { AppComponent } from './app.component';
 
@@ -19,7 +19,7 @@ import { AppComponent } from './app.component';
     // Lib
     TodoModule,
   ],
-  providers: [],
+  providers: [{ provide: TODO_ICON_SRC, useValue: 'assets/img/todo/' }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

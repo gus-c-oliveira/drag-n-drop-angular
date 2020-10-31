@@ -8,6 +8,7 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { TodoCardComponent, TodoFormComponent } from './components/index';
 import { TodoService } from './service/index';
+import { TODO_ICON_SRC } from './tokens';
 
 @NgModule({
   imports: [
@@ -20,6 +21,6 @@ import { TodoService } from './service/index';
   ],
   declarations: [TodoCardComponent, TodoFormComponent],
   exports: [TodoCardComponent],
-  providers: [TodoService],
+  providers: [{ provide: TODO_ICON_SRC, useValue: 'assets/' }, TodoService],
 })
 export class TodoModule {}
