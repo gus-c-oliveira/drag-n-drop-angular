@@ -2,7 +2,7 @@
   display: grid;
   grid-template-areas:
     'info info'
-    'advance delete';
+    'delete advance';
   row-gap: 0.5rem;
   min-width: 20rem;
   margin: 1rem auto;
@@ -21,17 +21,23 @@
 
   &__advance {
     grid-area: advance;
+    margin-left: auto;
+
+    filter: invert(84%) sepia(48%) saturate(3485%) hue-rotate(84deg) brightness(98%) contrast(110%);
   }
 
   &__delete {
     grid-area: delete;
+    margin-right: auto;
+
+    filter: invert(36%) sepia(34%) saturate(2943%) hue-rotate(335deg) brightness(95%) contrast(102%);
   }
 
   &__advance,
   &__delete {
     display: inline-block;
-    width: max-content;
-    margin: 0 auto;
+    width: 2rem;
+    height: 2rem;
 
     cursor: pointer;
   }

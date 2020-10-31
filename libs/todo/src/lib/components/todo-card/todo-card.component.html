@@ -1,26 +1,26 @@
 <div *ngIf="todo" class="todo">
   <span class="todo__info"> #{{ todo.id }}: {{ todo.title }} </span>
-  <span
-    *ngIf="todo.status !== 'DONE'"
-    (click)="
-      handleReduce({
-        todo: todo,
-        type: 'advance'
-      })
-    "
-    class="todo__advance"
-  >
-    Advance
-  </span>
-  <span
+  <img
+    class="todo__delete"
+    [src]="todoIconSrc + 'bin.svg'"
+    alt="Delete"
     (click)="
       handleReduce({
         todo: todo,
         type: 'delete'
       })
     "
-    class="todo__delete"
-  >
-    Delete
-  </span>
+  />
+  <img
+    *ngIf="todo.status !== 'DONE'"
+    class="todo__advance"
+    [src]="todoIconSrc + 'arrow-right.svg'"
+    alt="Advance"
+    (click)="
+      handleReduce({
+        todo: todo,
+        type: 'advance'
+      })
+    "
+  />
 </div>

@@ -33,8 +33,9 @@ header {
 .list {
   display: grid;
   flex: 1;
+  grid-template-rows: 100%;
   grid-template-columns: repeat(4, 1fr);
-  overflow-x: scroll;
+  overflow-x: auto;
 
   background-color: var(--color-white);
 
