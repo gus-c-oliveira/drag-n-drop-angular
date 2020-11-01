@@ -1,5 +1,7 @@
 @import './colors';
 
+// Form
+
 .mat-input-element {
   caret-color: var(--color-primary);
 }
@@ -14,4 +16,14 @@
 
 .mat-form-field-ripple {
   background-color: var(--color-primary) !important;
+}
+
+// Drag-And-Drop
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag.cdk-drag-placeholder > * {
+  opacity: 0;
 }

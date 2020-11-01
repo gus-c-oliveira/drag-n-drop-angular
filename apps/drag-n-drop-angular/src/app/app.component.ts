@@ -192,14 +192,14 @@ export class AppComponent {
       (item) => item.id === id
     );
     this.removeTodoFromStatus(todo, previousStatus);
+    this.addTodoToStatus({ ...todo, status });
     this.todoService
       .updateTodo(id, status)
       .pipe(take(1))
       .subscribe(
-        (response) => {
-          this.addTodoToStatus(response as Todo);
-        },
+        (response) => {},
         (error) => {
+          this.removeTodoFromStatus({ ...todo, status });
           this.addTodoToStatus(todo, previousStatus);
           console.warn('Error updating todo, please try again!');
         }
