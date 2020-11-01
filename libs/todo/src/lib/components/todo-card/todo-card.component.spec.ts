@@ -5,6 +5,7 @@ import {
   getElementBySelector,
   getElementTextContentBySelector,
 } from '../../testing/testing';
+import { TODO_ICON_SRC } from '../../tokens';
 import { TodoCardComponent } from './todo-card.component';
 
 describe('TodoCardComponent', () => {
@@ -14,6 +15,7 @@ describe('TodoCardComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [TodoCardComponent],
+      providers: [{ provide: TODO_ICON_SRC, useValue: '' }],
     }).compileComponents();
   });
 

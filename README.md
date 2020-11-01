@@ -11,6 +11,7 @@ In this demo:
 - Communicating frontend and backend using services and HTTP requests.
 - Unit testing using Jest.
 - End-to-end testing using Cypress.
+- Dependency injection using Injection Token.
 
 ![drag-n-drop](https://github.com/gus-c-oliveira/demo-gifs/blob/master/drag-n-drop-angular.gif)
 
